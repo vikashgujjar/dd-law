@@ -40,7 +40,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en-CA" className={`${cormorant.variable} ${manrope.variable}`}>
       <body>
         <noscript>
-          <style>{`.reveal,.reveal-child,.split-word,.mask-reveal,.mask-reveal-inner{opacity:1!important;transform:none!important;clip-path:none!important}.draw path,.draw line,.draw circle,.draw rect,.draw polyline,.draw ellipse{stroke-dashoffset:0!important}ul[data-inview]>li{opacity:1!important;transform:none!important;clip-path:none!important}`}</style>
+          <style>{`.reveal,.reveal-child,.split-word,.mask-reveal,.mask-reveal-inner{opacity:1!important;transform:none!important;clip-path:none!important}.draw path,.draw line,.draw circle,.draw rect,.draw polyline,.draw ellipse{stroke-dashoffset:0!important}ul[data-inview]>li{opacity:1!important;transform:none!important;clip-path:none!important}.lit-word{opacity:1!important}`}</style>
         </noscript>
         <a
           href="#main"

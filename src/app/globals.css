@@ -19,6 +19,19 @@
   --ease-silk: cubic-bezier(0.65, 0, 0.35, 1);
 
   --breakpoint-xs: 26rem;
+
+  /* V3 palette (forest, bone, sage, clay) */
+  --color-forest: #12302a;
+  --color-forest-2: #1a3d35;
+  --color-pine: #0b1d19;
+  --color-sage: #a3b8aa;
+  --color-sage-light: #d3ddd5;
+  --color-bone: #f3eee5;
+  --color-bone-2: #e8e0d2;
+  --color-clay: #c4673f;
+  --color-clay-light: #e9a582;
+  --font-display: Georgia, serif;
+  --font-body: system-ui, sans-serif;
 }
 
 @layer base {
@@ -291,6 +304,42 @@
   animation: slow-spin 120s linear infinite;
 }
 
+
+/* ================================================================== */
+/* V2 helpers                                                          */
+/* ================================================================== */
+/* Scroll-lit copy: --p (0..1) is written by JS, each word knows its --i */
+.lit-word {
+  opacity: clamp(0.16, calc(var(--p, 0) * var(--n, 1) - var(--i, 0)), 1);
+  transition: opacity 0.25s linear;
+}
+.marquee-reverse {
+  animation-direction: reverse;
+}
+.spin-20 {
+  animation: slow-spin 22s linear infinite;
+}
+
+/* Leadership auto-advance bar (animationend advances the slide) */
+@keyframes progress-x {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.lead-progress {
+  animation: progress-x 9s linear forwards;
+  animation-play-state: paused;
+}
+.lead-progress[data-run="true"] {
+  animation-play-state: running;
+}
+
+/* V3 hero: inline photo capsules unroll from the centre */
+@keyframes pill-in {
+  from { clip-path: inset(0 50% 0 50% round 999px); }
+  to { clip-path: inset(0 0 0 0 round 999px); }
+}
+.intro-pill { animation: pill-in 1.1s var(--ease-lux) var(--d, 0s) both; }
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -305,7 +354,14 @@
     transition: none;
   }
   .marquee-track,
-  .slow-spin {
+  .slow-spin,
+  .spin-20 {
+    animation: none;
+  }
+  .lit-word {
+    opacity: 1;
+  }
+  .lead-progress {
     animation: none;
   }
   .reveal,
@@ -328,4 +384,38 @@
 .slow-spin,
 .marquee-track {
   will-change: transform;
+}
+
+/* ================================================================== */
+/* V3 scope: fonts are only loaded on /v3 (variables set on .v3)        */
+/* ================================================================== */
+.v3 {
+  --font-display: var(--font-instrument), Georgia, serif;
+  --font-body: var(--font-dmsans), system-ui, sans-serif;
+  font-family: var(--font-body);
+  font-feature-settings: normal;
+}
+@layer base {
+  /* In the base layer so utilities like font-body can still override it. */
+  .v3 :where(h1, h2, h3) {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+}
+.v3 ::selection {
+  background: var(--color-clay);
+  color: var(--color-bone);
+}
+.v3 :focus-visible {
+  outline-color: var(--color-clay);
+}
+/* Drop cap for editorial paragraphs */
+.dropcap::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-size: 4.6em;
+  line-height: 0.78;
+  padding: 0.06em 0.12em 0 0;
+  color: var(--color-clay);
 }
